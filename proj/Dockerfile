@@ -28,4 +28,6 @@ ENTRYPOINT ["/code/start.sh"]
 
 EXPOSE 8008
 
-CMD ["python3 manage.py runserver 0.0.0.0:8008"]
+# RUN cd backup
+
+# CMD ["python3 manage.py runserver 0.0.0.0:8008"]
