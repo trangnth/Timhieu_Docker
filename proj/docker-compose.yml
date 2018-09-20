@@ -1,0 +1,25 @@
+version: '2'
+services:
+    nginx:
+        restart: always
+        build: ./nginx
+        depends_on:
+            - controller
+        ports:
+            - "80:80"
+
+    controller:
+        build: .
+#        command: "gunicorn -b 0.0.0.0:8000 --chdir /code/backup/ backup.wsgi:application --reload"
+        #volumes:
+        #    - .:/code
+        expose:
+            - "8000"
+
+#    nginx:
+#        restart: always
+#        build: ./nginx
+#        depends_on:
+#            - controller
+#        ports:
+#            - "80:80"

@@ -1,0 +1,6 @@
+[supervisord]
+nodaemon=true
+
+
+[program:gunicorn]
+command=/usr/local/bin/gunicorn -c /code/gunicorn_conf.py --chdir /code/backup backup.wsgi:application --reload

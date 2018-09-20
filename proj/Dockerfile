@@ -1,33 +1,28 @@
-FROM ubuntu:16.04
+#FROM ubuntu:16.04
+FROM python:3.6
 
 MAINTAINER Ginkgo<nguyenhuyentrang1996@gmail.com>
 
-RUN apt-get update
-
-RUN apt-get install python3 python3-pip -y
-
-RUN apt-get install libmysqlclient-dev -y
+RUN apt-get update && apt-get install -y supervisor
 
 RUN mkdir /code
 
+RUN mkdir -p /var/log/supervisor
+COPY ./supervisor/supervisord.conf /etc/supervisor/conf.d/
+
 WORKDIR /code
-
 ADD requirements.txt /code/
-
-RUN pip3 install --upgrade pip
-
 RUN pip install -r requirements.txt
+RUN pip install gunicorn psycopg2
 
 ADD . /code/
 
-COPY start.sh /code
+# COPY start.sh /code:z
 
-RUN chmod a+x /venv/start.sh
+# RUN chmod a+x /code/start.sh
 
-ENTRYPOINT ["/code/start.sh"]
+# ENTRYPOINT ["/code/start.sh"]
 
-EXPOSE 8008
+# EXPOSE 8008
 
-# RUN cd backup
-
-# CMD ["python3 manage.py runserver 0.0.0.0:8008"]
+CMD ["/usr/bin/supervisord"]
