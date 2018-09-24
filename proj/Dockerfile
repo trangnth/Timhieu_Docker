@@ -10,19 +10,15 @@ RUN mkdir /code
 RUN mkdir -p /var/log/supervisor
 COPY ./supervisor/supervisord.conf /etc/supervisor/conf.d/
 
+# Install nessesary packages
 WORKDIR /code
 ADD requirements.txt /code/
-RUN pip install -r requirements.txt
-RUN pip install gunicorn psycopg2
+RUN pip install -r requirements.txt 
 
-ADD . /code/
-
+# ADD . /code/
 # COPY start.sh /code:z
-
 # RUN chmod a+x /code/start.sh
-
 # ENTRYPOINT ["/code/start.sh"]
-
 # EXPOSE 8008
 
 CMD ["/usr/bin/supervisord"]
